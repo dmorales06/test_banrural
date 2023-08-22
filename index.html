@@ -41,7 +41,7 @@
 </body>
 
 <script>
-  let randomNumber = Math.random() * 10;
+  let randomNumber = Math.floor(Math.random() * 100) + 1;
 
   const ATTEMPS = 5;
   const guesses = document.querySelector('.guesses');
@@ -50,17 +50,25 @@
   const guessSubmit = document.querySelector('.guessSubmit');
   const guessField = document.querySelector('.guessField');
 
-  let guessCount = 1;
+  let guessCount = 0;
   let resetButton;
 
   function checkGuess() {
 
-    let userGuess = guessField.value;
-    if(guessCount === 1) {
+    var userGuess = guessField.value;
+    //muestra de mensajes con numeros concatenados 
+    if(guessCount === 0) {
       guesses.textContent = 'Número aleatorio anterior: ';
     }
     guesses.textContent += userGuess + ' ';
 
+    //evaluacion de numero ingresado
+    if(Number.isInteger(parseFloat(userGuess)) && userGuess >= 1) {
+      guessCount++;
+    }else{
+      alert('El número que ingreso no es valido, favor ingrese un número entero');
+    }
+    console.log(guessCount);
     if(userGuess === randomNumber) {
       lastResult.textContent = '!!!Pérdistes!!!';
       lastResult.style.backgroundColor = 'black';
@@ -80,7 +88,7 @@
       }
     }
 
-    guessCount++;
+    //guessCount++;
     guessField.value = '';
     guessField.focus();
   }
@@ -96,7 +104,7 @@
   }
 
   function resetGame() {
-	  guessCount = 1;
+	  guessCount = 0;
 
 	  const resetParas = document.querySelectorAll('.resultParas p');
 	  for(let i = 0; i < resetParas.length; i++) {
@@ -111,7 +119,7 @@
 
 	  lastResult.style.backgroundColor = 'white';
 
-	  randomNumber = Math.floor(Math.random()) + 1;
+	  randomNumber = Math.floor(Math.random() * 100) + 1;
   }
 
   guessSubmit.addEventListener('click', checkGuess);
