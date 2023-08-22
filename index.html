@@ -35,18 +35,16 @@
 <div class="resultParas">
   <p class="guesses"></p>
   <p class="lastResult"></p>
-  <p class="lowOrHi"></p>
 </div>
 
 </body>
 
 <script>
-  let randomNumber = Math.floor(Math.random() * 100) + 1;
-
-  const ATTEMPS = 5;
+  var randomNumber = Math.floor(Math.random() * 100) + 1;
+console.log(randomNumber);
+  const ATTEMPS = 10;
   const guesses = document.querySelector('.guesses');
   const lastResult = document.querySelector('.lastResult');
-  const lowOrHi = document.querySelector('.lowOrHi');
   const guessSubmit = document.querySelector('.guessSubmit');
   const guessField = document.querySelector('.guessField');
 
@@ -54,6 +52,7 @@
   let resetButton;
 
   function checkGuess() {
+    
 
     var userGuess = guessField.value;
     //muestra de mensajes con numeros concatenados 
@@ -68,27 +67,31 @@
     }else{
       alert('El número que ingreso no es valido, favor ingrese un número entero');
     }
+    
+    
+     
+    
+    console.log(userGuess);
     console.log(guessCount);
-    if(userGuess === randomNumber) {
-      lastResult.textContent = '!!!Pérdistes!!!';
-      lastResult.style.backgroundColor = 'black';
-      lowOrHi.textContent = '';
-      setGameOver();
-    } else if(guessCount === ATTEMPS) {
+    if(parseInt(parseFloat(userGuess)) === randomNumber) {
       lastResult.textContent = 'Felicitaciones! adivinaste el número!';
+      lastResult.style.backgroundColor = 'green';
+      setGameOver();
+    }else if(guessCount === ATTEMPS) {
+      lastResult.textContent = '!!!Pérdistes!!!';
       lastResult.style.backgroundColor = 'red';
       setGameOver();
-    } else {
-      lastResult.textContent = 'Incorrecto! ';
-      lastResult.style.backgroundColor = 'green';
+    }else {
+      lastResult.style.backgroundColor = 'black';
       if(userGuess < randomNumber) {
-        lowOrHi.textContent = 'El número es mayor!';
+        lastResult.textContent = 'Incorrecto! El número es mayor!';
       } else if(userGuess > randomNumber) {
-        lowOrHi.textContent = 'El número es menor!';
-      }
+        lastResult.textContent = 'Incorrecto! El número es menor!';
+      } 
     }
+    
+    
 
-    //guessCount++;
     guessField.value = '';
     guessField.focus();
   }
